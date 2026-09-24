@@ -2,6 +2,8 @@
 
 A scalable, feature-oriented Angular e-commerce application engineered for independent, parallel development across multi-developer engineering teams.
 
+Demo link : https://perfum-proj.vercel.app/products
+
 ---
 
 ## 1. Project Overview
