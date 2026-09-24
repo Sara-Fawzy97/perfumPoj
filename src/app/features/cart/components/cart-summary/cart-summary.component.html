@@ -1,0 +1,54 @@
+<div class="bg-stone-50 border border-stone-200 rounded-2xl p-6">
+  <h3 class="text-base font-serif text-stone-900 mb-4 pb-2 border-b border-stone-200">
+    Order Summary
+  </h3>
+
+  <div class="space-y-3 text-sm">
+    <div class="flex justify-between text-stone-600">
+      <span>Subtotal</span>
+      <span class="font-medium text-stone-900">{{ subtotal() | appPriceFormat }}</span>
+    </div>
+
+    <div class="flex justify-between text-stone-600">
+      <span>Estimated Shipping</span>
+      @if (shipping() === 0) {
+        <span class="text-emerald-700 font-medium text-xs bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+          Complimentary
+        </span>
+      } @else {
+        <span class="font-medium text-stone-900">{{ shipping() | appPriceFormat }}</span>
+      }
+    </div>
+
+    <div class="flex justify-between text-stone-600">
+      <span>Estimated Tax (8%)</span>
+      <span class="font-medium text-stone-900">{{ tax() | appPriceFormat }}</span>
+    </div>
+
+    <div class="pt-3 border-t border-stone-200 flex justify-between items-baseline">
+      <span class="text-base font-medium text-stone-900">Total</span>
+      <span class="text-xl font-bold font-serif text-stone-900">
+        {{ total() | appPriceFormat }}
+      </span>
+    </div>
+  </div>
+
+  <div class="mt-6">
+    <app-button
+      variant="primary"
+      size="lg"
+      [fullWidth]="true"
+      [disabled]="disabled()"
+      (clicked)="onCheckout()"
+    >
+      Proceed to Checkout
+    </app-button>
+  </div>
+
+  <div class="mt-4 flex items-center justify-center gap-2 text-[11px] text-stone-400">
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+    </svg>
+    <span>Encrypted & secure checkout</span>
+  </div>
+</div>

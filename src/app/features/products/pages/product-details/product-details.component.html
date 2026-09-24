@@ -1,0 +1,249 @@
+<div class="max-w-[1440px]  mx-auto  pb-8">
+  <!-- Breadcrumbs -->
+   <div class="bg-white px-20  w-full">
+  <nav class="flex items-center  py-8 gap-2 text-[12px] text-stone-500 w-full tracking-wide">
+    <a routerLink="/" class="hover:text-stone-900 transition-colors">Home</a>
+    <span class="text-stone-400">›</span>
+    <a routerLink="/products" class="hover:text-stone-900 transition-colors">Shop</a>
+    <span class="text-stone-400">›</span>
+    <a routerLink="/products" class="hover:text-stone-900 transition-colors">Fragrances</a>
+    <span class="text-stone-400">›</span>
+    <span class="text-stone-900 font-medium">{{ product()?.name ?? 'Loading...' }}</span>
+  </nav>
+</div>
+
+<div class="px-6 sm:px-10 ">
+
+  @if (isLoading()) {
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 animate-pulse">
+      <div class="space-y-4">
+        <div class="w-full aspect-[656/600] bg-stone-200"></div>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="h-28 bg-stone-200"></div>
+          <div class="h-28 bg-stone-200"></div>
+          <div class="h-28 bg-stone-200"></div>
+        </div>
+      </div>
+      <div class="space-y-6">
+        <div class="h-6 bg-stone-200 w-1/3"></div>
+        <div class="h-12 bg-stone-200 w-2/3"></div>
+        <div class="h-8 bg-stone-200 w-1/4"></div>
+        <div class="h-24 bg-stone-200"></div>
+      </div>
+    </div>
+  } @else if (!product()) {
+    <div class="text-center py-20 bg-white border border-stone-200 max-w-xl mx-auto p-8">
+      <h2 class="text-xl font-serif text-stone-900 mb-2">Fragrance Not Found</h2>
+      <p class="text-xs text-stone-500 mb-6">The requested formulation may have been archived or is temporarily unavailable in the atelier.</p>
+      <a routerLink="/products" class="inline-block px-6 py-3 bg-stone-950 text-white text-[11px] font-medium tracking-[0.16em] uppercase hover:bg-stone-800 transition-colors">
+        Return to Collections
+      </a>
+    </div>
+  } @else {
+    <!-- Main Product Section (Two Columns) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+
+      <!-- Left Column: Gallery -->
+      <div>
+        <!-- Main Large Image -->
+        <div class="w-full aspect-[656/600] bg-[#EFECE6] overflow-hidden mb-3.5">
+          <img
+            [src]="selectedImage()"
+            [alt]="product()!.name"
+            class="w-full h-full object-cover object-center transition-all duration-500"
+          />
+        </div>
+
+        <!-- Thumbnails (3 items) -->
+        @if (product()!.images.length > 1) {
+          <div class="grid grid-cols-3 gap-3">
+            @for (img of product()!.images.slice(0, 3); track img) {
+              <button
+                type="button"
+                (click)="selectImage(img)"
+                class="w-full aspect-[211/120] overflow-hidden bg-stone-100 transition-all cursor-pointer border"
+                [class]="selectedImage() === img ? 'border-stone-900 ring-1 ring-stone-900' : 'border-transparent opacity-80 hover:opacity-100'"
+              >
+                <img [src]="img" [alt]="product()!.name" class="w-full h-full object-cover" />
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Right Column: Product Information & Controls -->
+      <div class="lg:pl-6">
+        <!-- Badges -->
+        <div class="flex items-center gap-2 mb-3">
+          <span class="px-2.5 py-1 bg-[#F5F2EB] text-stone-800 text-[10px] tracking-[0.14em] uppercase font-semibold">
+            SCENT FAMILY: {{ product()!.category }}
+          </span>
+          <span class="px-2.5 py-1 bg-[#F5F2EB] text-stone-800 text-[10px] tracking-[0.14em] uppercase font-semibold">
+            OCCASION: EVENING
+          </span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="font-serif text-4xl sm:text-5xl font-normal text-stone-900 tracking-tight mb-3">
+          {{ product()!.name }}
+        </h1>
+
+        <!-- Price & Availability -->
+        <div class="flex items-center justify-between mb-8">
+          <span class="text-2xl sm:text-3xl font-normal text-stone-900 tracking-tight">
+            ${{ currentPrice() }}
+          </span>
+
+          <span class="flex items-center gap-1.5 text-[12px] font-medium text-emerald-700">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+            Available in Atelier
+          </span>
+        </div>
+
+        <!-- Volume Selection -->
+        <div class="mb-6">
+          <span class="block text-[11px] font-semibold tracking-[0.14em] uppercase text-stone-900 mb-3">
+            SELECT VOLUME
+          </span>
+          <div class="grid grid-cols-3 gap-3">
+            @for (opt of product()!.options; track opt.id) {
+              <button
+                type="button"
+                (click)="selectOption(opt)"
+                class="py-3 px-4 border text-center transition-all cursor-pointer"
+                [class]="selectedOption()?.id === opt.id
+                  ? 'border-stone-900 bg-white ring-1 ring-stone-900'
+                  : 'border-stone-200 bg-[#FBF9F6] hover:border-stone-400'"
+              >
+                <span class="block text-[13px] font-medium text-stone-900">{{ opt.sizeMl }} ml</span>
+                <span class="block text-[11px] text-stone-500 mt-0.5">${{ opt.price }}</span>
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Complimentary Signature Gift Wrapping Toggle Card -->
+        <div class="p-4 bg-[#F5F2EB] flex items-center justify-between gap-4 mb-6">
+          <div>
+            <span class="block text-[12px] font-medium text-stone-900">
+              Complimentary Signature Gift Wrapping
+            </span>
+            <span class="block text-[11px] text-stone-500 mt-0.5">
+              Encased in linen paper box with custom wax seal stamp.
+            </span>
+          </div>
+
+          <button
+            type="button"
+            (click)="toggleGiftWrapping()"
+            class="w-11 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors flex-shrink-0"
+            [class]="giftWrapping() ? 'bg-stone-900' : 'bg-stone-300'"
+            aria-label="Toggle gift wrapping"
+          >
+            <div
+              class="bg-white w-4 h-4 rounded-full shadow-md transform transition-transform"
+              [class]="giftWrapping() ? 'translate-x-5' : 'translate-x-0'"
+            ></div>
+          </button>
+        </div>
+
+        <!-- Quantity & Add to Cart Action -->
+        <div class="flex items-center gap-3 mb-10">
+          <!-- Quantity selector -->
+          <div class="flex items-center border border-stone-200 bg-white h-[48px] px-3">
+            <button
+              type="button"
+              (click)="decrementQuantity()"
+              class="text-stone-500 hover:text-stone-900 px-2 text-sm font-semibold cursor-pointer"
+              aria-label="Decrease quantity"
+            >
+              -
+            </button>
+            <span class="w-8 text-center text-xs font-medium text-stone-900">
+              {{ quantity() }}
+            </span>
+            <button
+              type="button"
+              (click)="incrementQuantity()"
+              class="text-stone-500 hover:text-stone-900 px-2 text-sm font-semibold cursor-pointer"
+              aria-label="Increase quantity"
+            >
+              +
+            </button>
+          </div>
+
+          <!-- Add to Cart CTA -->
+          <button
+            type="button"
+            (click)="onAddToCart()"
+            class="flex-1 h-[48px] bg-stone-950 text-white hover:bg-stone-800 text-[11px] font-semibold tracking-[0.16em] uppercase transition-colors flex items-center justify-center cursor-pointer"
+          >
+            {{ isAdded() ? 'ADDED TO CART ✓' : ('ADD TO CART / $' + totalPrice()) }}
+          </button>
+        </div>
+
+        <!-- Scent Anatomy Section -->
+        <div class="pt-8 border-t border-stone-200">
+          <h2 class="font-serif text-2xl text-stone-900 font-normal mb-3">
+            Scent Anatomy
+          </h2>
+          <p class="text-[13px] text-stone-600 leading-relaxed font-light mb-6">
+            {{ product()!.description }}
+          </p>
+
+          <div class="divide-y divide-stone-200 border-t border-b border-stone-200 text-[12px]">
+            <div class="py-3 flex items-start justify-between gap-4">
+              <span class="font-semibold uppercase tracking-[0.14em] text-[10px] text-stone-900">
+                TOP NOTES
+              </span>
+              <span class="text-stone-600 font-normal text-right">
+                {{ product()!.notes.top.join(', ') }}
+              </span>
+            </div>
+            <div class="py-3 flex items-start justify-between gap-4">
+              <span class="font-semibold uppercase tracking-[0.14em] text-[10px] text-stone-900">
+                HEART NOTES
+              </span>
+              <span class="text-stone-600 font-normal text-right">
+                {{ product()!.notes.heart.join(', ') }}
+              </span>
+            </div>
+            <div class="py-3 flex items-start justify-between gap-4">
+              <span class="font-semibold uppercase tracking-[0.14em] text-[10px] text-stone-900">
+                BASE NOTES
+              </span>
+              <span class="text-stone-600 font-normal text-right">
+                {{ product()!.notes.base.join(', ') }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Olfactory Companions Section -->
+    @if (companions().length > 0) {
+      <div class="mt-28 mb-16">
+        <div class="text-center mb-12">
+          <h2 class="font-serif text-3xl sm:text-4xl text-stone-900 font-normal tracking-tight">
+            Olfactory Companions
+          </h2>
+          <p class="text-[11px] uppercase tracking-[0.18em] text-stone-500 font-medium mt-2">
+            FRAGRANCES OF SYNONYMOUS SOPHISTICATION
+          </p>
+        </div>
+
+        <!-- 4 Companion Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          @for (companion of companions(); track companion.id) {
+            <app-product-card
+              [product]="companion"
+              (addToCart)="onCompanionAddToCart($event)"
+            />
+          }
+        </div>
+      </div>
+    }
+  }
+</div>
+</div>

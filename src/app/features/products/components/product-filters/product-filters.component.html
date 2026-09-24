@@ -1,0 +1,127 @@
+<aside class="w-full lg:w-[220px] flex-shrink-0 text-stone-900">
+  <!-- CATEGORY BLOCK -->
+  <div class="mb-6">
+    <h3 class="text-[11px] font-semibold tracking-[0.14em] uppercase text-stone-900 mb-3.5">
+      Category
+    </h3>
+    <ul class="space-y-2.5">
+      @for (col of collections; track col) {
+        <li>
+          <button
+            type="button"
+            (click)="toggleCollection(col)"
+            class="flex items-center gap-2.5 text-[13px] text-stone-700 hover:text-stone-950 transition-colors w-full text-left cursor-pointer group"
+          >
+            <span
+              class="w-3.5 h-3.5 flex items-center justify-center border transition-colors"
+              [class]="selectedCollection() === col
+                ? 'bg-[#B48B57] border-[#B48B57] text-white'
+                : 'border-stone-300 bg-white group-hover:border-stone-400'"
+            >
+              @if (selectedCollection() === col) {
+                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                </svg>
+              }
+            </span>
+            <span class="tracking-tight">{{ col }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="border-b border-stone-200 my-6"></div>
+
+  <!-- SCENT FAMILY BLOCK -->
+  <div class="mb-6">
+    <h3 class="text-[11px] font-semibold tracking-[0.14em] uppercase text-stone-900 mb-3.5">
+      Scent Family
+    </h3>
+    <ul class="space-y-2.5">
+      @for (sf of scentFamilies; track sf.id) {
+        <li>
+          <button
+            type="button"
+            (click)="toggleScentFamily(sf.id)"
+            class="flex items-center gap-2.5 text-[13px] text-stone-700 hover:text-stone-950 transition-colors w-full text-left cursor-pointer group"
+          >
+            <span
+              class="w-3.5 h-3.5 flex items-center justify-center border transition-colors"
+              [class]="selectedCategory() === sf.id
+                ? 'bg-stone-900 border-stone-900 text-white'
+                : 'border-stone-300 bg-white group-hover:border-stone-400'"
+            >
+              @if (selectedCategory() === sf.id) {
+                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                </svg>
+              }
+            </span>
+            <span class="tracking-tight">{{ sf.label }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="border-b border-stone-200 my-6"></div>
+
+  <!-- OCCASION BLOCK -->
+  <div class="mb-6">
+    <h3 class="text-[11px] font-semibold tracking-[0.14em] uppercase text-stone-900 mb-3.5">
+      Occasion
+    </h3>
+    <ul class="space-y-2.5">
+      @for (occ of occasions; track occ) {
+        <li>
+          <button
+            type="button"
+            (click)="toggleOccasion(occ)"
+            class="flex items-center gap-2.5 text-[13px] text-stone-700 hover:text-stone-950 transition-colors w-full text-left cursor-pointer group"
+          >
+            <span
+              class="w-3.5 h-3.5 flex items-center justify-center border transition-colors"
+              [class]="selectedOccasions().includes(occ)
+                ? 'bg-stone-900 border-stone-900 text-white'
+                : 'border-stone-300 bg-white group-hover:border-stone-400'"
+            >
+              @if (selectedOccasions().includes(occ)) {
+                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                </svg>
+              }
+            </span>
+            <span class="tracking-tight">{{ occ }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="border-b border-stone-200 my-6"></div>
+
+  <!-- PRICE RANGE BLOCK -->
+  <div>
+    <h3 class="text-[11px] font-semibold tracking-[0.14em] uppercase text-stone-900 mb-3.5">
+      Price Range
+    </h3>
+    <div class="pt-2 pb-1">
+      <!-- Visual slider from Figma design -->
+      <div class="relative flex items-center mb-3">
+        <div class="w-full h-[2px] bg-stone-300 relative">
+          <!-- Active bar between min and selected -->
+          <div class="absolute left-[15%] right-[25%] h-full bg-[#B48B57]"></div>
+          <!-- Left handle circle -->
+          <div class="absolute left-[15%] -top-[5px] w-3 h-3 rounded-full bg-white border border-[#B48B57] -translate-x-1/2 shadow-xs cursor-pointer"></div>
+          <!-- Right handle circle -->
+          <div class="absolute right-[25%] -top-[5px] w-3 h-3 rounded-full bg-white border border-[#B48B57] translate-x-1/2 shadow-xs cursor-pointer"></div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between text-[12px] text-stone-600 font-medium">
+        <span>$100</span>
+        <span>$400</span>
+      </div>
+    </div>
+  </div>
+</aside>

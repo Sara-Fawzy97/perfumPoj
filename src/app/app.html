@@ -1,0 +1,7 @@
+<div class="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 selection:bg-amber-200">
+  <app-header [cartCount]="cartState.itemCount()" />
+  <main class="flex-1">
+    <router-outlet />
+  </main>
+  <app-footer />
+</div>

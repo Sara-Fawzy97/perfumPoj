@@ -1,0 +1,42 @@
+@if (loading()) {
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (placeholder of [1, 2, 3, 4, 5, 6]; track placeholder) {
+      <div class="bg-white p-4 animate-pulse flex flex-col justify-between">
+        <div class="w-full aspect-[276/320] bg-stone-100 mb-4"></div>
+        <div class="space-y-2">
+          <div class="h-4 bg-stone-200 rounded w-2/3"></div>
+          <div class="h-3 bg-stone-100 rounded w-1/2"></div>
+        </div>
+        <div class="h-10 bg-stone-100 mt-4"></div>
+      </div>
+    }
+  </div>
+} @else if (products().length === 0) {
+  <div class="text-center py-20 px-4 bg-white border border-stone-200">
+    <h3 class="text-lg font-serif text-stone-900 mb-2">No fragrances found</h3>
+    <p class="text-xs text-stone-500 max-w-sm mx-auto tracking-wide">
+      Adjust your scent family, category, or price preferences to discover our artisanal formulations.
+    </p>
+  </div>
+} @else {
+  <!-- Grid container with Figma signature corner brackets -->
+  <div class="relative">
+    <!-- Top-left bracket -->
+    <div class="absolute -top-3 -left-3 w-3 h-3 border-t border-l border-stone-900 pointer-events-none"></div>
+    <!-- Top-right bracket -->
+    <div class="absolute -top-3 -right-3 w-3 h-3 border-t border-r border-stone-900 pointer-events-none"></div>
+    <!-- Bottom-left bracket -->
+    <div class="absolute -bottom-3 -left-3 w-3 h-3 border-b border-l border-stone-900 pointer-events-none"></div>
+    <!-- Bottom-right bracket -->
+    <div class="absolute -bottom-3 -right-3 w-3 h-3 border-b border-r border-stone-900 pointer-events-none"></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (product of products(); track product.id) {
+        <app-product-card
+          [product]="product"
+          (addToCart)="addToCart.emit($event)"
+        />
+      }
+    </div>
+  </div>
+}

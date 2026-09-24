@@ -1,0 +1,82 @@
+<div class="max-w-[1440px] mx-auto px-6 sm:px-10 py-8">
+  <!-- Breadcrumbs -->
+  <nav class="flex items-center gap-2 text-[12px] text-stone-500 mb-6 tracking-wide">
+    <a routerLink="/" class="hover:text-stone-900 transition-colors">Home</a>
+    <span class="text-stone-400">›</span>
+    <a routerLink="/products" class="hover:text-stone-900 transition-colors">Shop</a>
+    <span class="text-stone-400">›</span>
+    <span class="text-stone-900 font-medium">All Fragrances</span>
+  </nav>
+
+  <!-- Title & Subtitle -->
+  <div class="mb-10">
+    <h1 class="font-serif text-4xl sm:text-5xl font-normal text-stone-900 tracking-tight">
+      All Fragrances
+    </h1>
+    <p class="text-sm text-stone-500 font-light mt-2.5 tracking-wide">
+      Cultivated formulations curated to command atmospheric space.
+    </p>
+  </div>
+
+  <!-- Two-Column Layout: Sidebar Filters + Main Listing -->
+  <div class="flex flex-col lg:flex-row gap-12 items-start">
+    <!-- Sidebar Filters -->
+    <app-product-filters
+      [selectedCategory]="productsState.selectedCategory()"
+      (categoryChange)="onCategoryChange($event)"
+    />
+
+    <!-- Main Products Content -->
+    <div class="flex-1 w-full min-w-0">
+      <!-- Sort & Counter Header -->
+      <div class="flex items-center justify-between pb-3.5 mb-8 border-b border-stone-200">
+        <span class="text-[11px] font-semibold tracking-[0.14em] uppercase text-stone-800">
+          24 FRAGRANCES AVAILABLE
+        </span>
+
+        <app-product-sort
+          [selectedSort]="productsState.sortBy()"
+          (sortChange)="onSortChange($event)"
+        />
+      </div>
+
+      <!-- Product Listing Grid -->
+      <app-product-grid
+        [products]="productsState.filteredProducts()"
+        [loading]="productsState.isLoading()"
+        (addToCart)="onAddToCart($event)"
+      />
+
+      <!-- Pagination -->
+      <div class="mt-14 flex items-center justify-center gap-3">
+        <button
+          type="button"
+          (click)="onPrevPage()"
+          [disabled]="currentPage() === 1"
+          class="w-9 h-9 border border-stone-200 bg-white hover:border-stone-900 disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center text-stone-800 cursor-pointer"
+          aria-label="Previous Page"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <span class="text-[12px] text-stone-700 font-medium tracking-wider px-2 select-none">
+          Page {{ currentPage() }} of {{ totalPages() }}
+        </span>
+
+        <button
+          type="button"
+          (click)="onNextPage()"
+          [disabled]="currentPage() === totalPages()"
+          class="w-9 h-9 bg-stone-950 text-white hover:bg-stone-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center cursor-pointer"
+          aria-label="Next Page"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
