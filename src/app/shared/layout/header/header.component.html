@@ -1,63 +1,96 @@
 <!-- Announcement Bar -->
-<div class="bg-stone-950 text-stone-100 text-center text-[11px] tracking-[0.15em] uppercase font-medium py-2.5 px-4">
+<div class="w-full bg-stone-950 text-stone-100 text-center text-[10px] sm:text-[11px] tracking-[0.15em] uppercase font-medium py-2.5 px-4">
   Complimentary Signature Gift Wrapping on All Orders Above $150
 </div>
 
 <!-- Main Header -->
-<header class="sticky top-0 z-40 bg-[#FAF8F5] border-b border-stone-200">
-  <div class="max-w-[1440px] mx-auto px-10 h-[72px] flex items-center justify-between gap-8">
+<header class="w-full sticky top-0 z-40 bg-[#FAF8F5] border-b border-stone-200">
+  <div class="w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-10 h-[72px] flex items-center justify-between relative">
 
-    <!-- Left Nav -->
-    <nav class="flex items-center gap-8">
-      <a routerLink="/products" class="text-[12px] font-semibold tracking-[0.12em] uppercase text-stone-900 hover:text-stone-600 transition-colors">
-        Home
-      </a>
-      <a routerLink="/products" routerLinkActive="text-stone-900 border-b border-stone-900" class="text-[12px] font-medium tracking-[0.12em] uppercase text-stone-500 hover:text-stone-900 transition-colors">
-        Shop
-      </a>
-      <a routerLink="/products" class="text-[12px] font-medium tracking-[0.12em] uppercase text-stone-500 hover:text-stone-900 transition-colors">
-        Categories
-      </a>
-      <a routerLink="/products" class="text-[12px] font-medium tracking-[0.12em] uppercase text-stone-500 hover:text-stone-900 transition-colors">
-        The Atelier
-      </a>
-    </nav>
+    <!-- Left Nav / Mobile Toggle -->
+    <div class="flex-1 flex items-center justify-start gap-4">
+      <!-- Mobile menu hamburger -->
+      <button
+        type="button"
+        (click)="toggleMobileMenu()"
+        class="lg:hidden text-stone-700 hover:text-stone-900 p-1.5 cursor-pointer"
+        aria-label="Toggle navigation menu"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
 
-    <!-- Center Logo -->
-    <a routerLink="/products" class="absolute left-1/2 -translate-x-1/2">
-      <span class="text-2xl font-serif tracking-[0.25em] uppercase text-stone-900 hover:text-stone-600 transition-colors">
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-6 xl:gap-8">
+        <a routerLink="/products" class="text-[12px] font-semibold tracking-[0.12em] uppercase text-stone-900 hover:text-stone-600 transition-colors">
+          Home
+        </a>
+        <a routerLink="/products" routerLinkActive="text-stone-900 border-b border-stone-900" class="text-[12px] font-medium tracking-[0.12em] uppercase text-stone-500 hover:text-stone-900 transition-colors">
+          Shop
+        </a>
+        <a routerLink="/products" class="text-[12px] font-medium tracking-[0.12em] uppercase text-stone-500 hover:text-stone-900 transition-colors">
+          Categories
+        </a>
+        <a routerLink="/products" class="text-[12px] font-medium tracking-[0.12em] uppercase text-stone-500 hover:text-stone-900 transition-colors">
+          The Atelier
+        </a>
+      </nav>
+    </div>
+
+    <!-- Center Logo (Properly positioned relative to container) -->
+    <a routerLink="/products" class="absolute left-1/2 -translate-x-1/2 flex-shrink-0 text-center pointer-events-auto">
+      <span class="text-xl sm:text-2xl font-serif tracking-[0.2em] sm:tracking-[0.25em] uppercase text-stone-900 hover:text-stone-600 transition-colors whitespace-nowrap">
         Odoratus
       </span>
     </a>
 
     <!-- Right Actions -->
-    <div class="flex items-center gap-5">
-      <!-- Search -->
-      <div class="flex items-center gap-2 border border-stone-300 rounded-full px-3 py-1.5 bg-transparent min-w-[180px]">
+    <div class="flex-1 flex items-center justify-end gap-3 sm:gap-5">
+      <!-- Search Input -->
+      <div class="hidden sm:flex items-center gap-2 border border-stone-300 rounded-full px-3 py-1.5 bg-transparent w-[140px] md:w-[180px] lg:w-[220px]">
         <svg class="w-3.5 h-3.5 text-stone-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>
-        <span class="text-[11px] text-stone-400 tracking-wide">Search fragrances...</span>
+        <span class="text-[11px] text-stone-400 tracking-wide truncate">Search fragrances...</span>
       </div>
 
       <!-- Account icon -->
-      <button class="text-stone-600 hover:text-stone-900 transition-colors" aria-label="Account">
+      <button class="text-stone-600 hover:text-stone-900 transition-colors p-1" aria-label="Account">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
         </svg>
       </button>
 
       <!-- Cart -->
-      <a routerLink="/cart" routerLinkActive="text-stone-900" class="relative text-stone-600 hover:text-stone-900 transition-colors" aria-label="Cart">
+      <a routerLink="/cart" routerLinkActive="text-stone-900" class="relative text-stone-600 hover:text-stone-900 transition-colors p-1" aria-label="Cart">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
         </svg>
         @if (cartCount() > 0) {
-          <span class="absolute -top-2 -right-2 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-stone-900 rounded-full">
+          <span class="absolute -top-1 -right-1 inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-stone-900 rounded-full">
             {{ cartCount() }}
           </span>
         }
       </a>
     </div>
   </div>
+
+  <!-- Mobile Dropdown Navigation -->
+  @if (isMobileMenuOpen()) {
+    <div class="lg:hidden border-t border-stone-200 bg-[#FAF8F5] px-6 py-4 space-y-3">
+      <a (click)="isMobileMenuOpen.set(false)" routerLink="/products" class="block text-[12px] font-semibold tracking-[0.12em] uppercase text-stone-900 py-1">
+        Home
+      </a>
+      <a (click)="isMobileMenuOpen.set(false)" routerLink="/products" class="block text-[12px] font-medium tracking-[0.12em] uppercase text-stone-600 py-1">
+        Shop
+      </a>
+      <a (click)="isMobileMenuOpen.set(false)" routerLink="/products" class="block text-[12px] font-medium tracking-[0.12em] uppercase text-stone-600 py-1">
+        Categories
+      </a>
+      <a (click)="isMobileMenuOpen.set(false)" routerLink="/products" class="block text-[12px] font-medium tracking-[0.12em] uppercase text-stone-600 py-1">
+        The Atelier
+      </a>
+    </div>
+  }
 </header>
