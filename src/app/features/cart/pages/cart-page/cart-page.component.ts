@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartState } from '../../state/cart.state';
-import { CartService } from '../../services/cart.service';
 import { CartItemComponent } from '../../components/cart-item/cart-item.component';
 import { CartSummaryComponent } from '../../components/cart-summary/cart-summary.component';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
@@ -15,7 +14,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 })
 export class CartPageComponent {
   readonly cartState = inject(CartState);
-  private readonly cartService = inject(CartService);
+  private readonly router = inject(Router);
 
   onQuantityChange(productId: string, sizeMl: number, delta: number): void {
     this.cartState.updateQuantity(productId, sizeMl, delta);
@@ -30,9 +29,6 @@ export class CartPageComponent {
   }
 
   onCheckout(): void {
-    this.cartService.checkout({ items: this.cartState.items() }).subscribe(result => {
-      alert(`Order Placed: ${result.orderId} - ${result.message}`);
-      this.cartState.clearCart();
-    });
+    this.router.navigate(['/cart/checkout']);
   }
 }
